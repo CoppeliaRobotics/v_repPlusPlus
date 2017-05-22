@@ -31,6 +31,8 @@
 #define VREPPLUSPLUS_PLUGIN_H_INCLUDED
 
 #include <iostream>
+#include <string>
+#include <vector>
 
 #include "v_repLib.h"
 
