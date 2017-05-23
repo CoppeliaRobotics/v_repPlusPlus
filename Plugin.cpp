@@ -232,9 +232,12 @@ namespace vrep
             {
                 std::string name;
                 onImageFilterEnumerate(replyData[0], replyData[1], name);
-                simChar *ret = simCreateBuffer(name.length() + 1);
-                strcpy(ret, name.c_str());
-                retVal = ret;
+                if(name.length())
+                {
+                    simChar *ret = simCreateBuffer(name.length() + 1);
+                    strcpy(ret, name.c_str());
+                    retVal = ret;
+                }
             }
             break;
         case sim_message_eventcallback_imagefilter_adjustparams:
@@ -284,10 +287,13 @@ namespace vrep
             {
                 simFloat **b = (simFloat**)customData;
                 std::vector<simFloat> r = onImageFilterProcess(auxiliaryData[0], auxiliaryData[1], auxiliaryData[2], auxiliaryData[3], auxiliaryData[4], b[0], b[1], b[2], b[3], b[4], b[5], (void*)b[6], replyData[0]);
-                simFloat *ret2 = (simFloat*)simCreateBuffer(sizeof(simFloat) * r.size());
-                for(int i = 0; i < r.size(); i++) ret2[i] = r[i];
-                replyData[1] = r.size();
-                retVal = ret2;
+                if(r.size())
+                {
+                    simFloat *ret2 = (simFloat*)simCreateBuffer(sizeof(simFloat) * r.size());
+                    for(int i = 0; i < r.size(); i++) ret2[i] = r[i];
+                    replyData[1] = r.size();
+                    retVal = ret2;
+                }
             }
             break;
         case sim_message_eventcallback_abouttoundo:
