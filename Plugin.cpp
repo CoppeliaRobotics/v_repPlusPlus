@@ -31,6 +31,7 @@
 
 #include <string>
 #include <vector>
+#include <cstring>
 
 namespace vrep
 {
@@ -290,7 +291,7 @@ namespace vrep
                 if(r.size())
                 {
                     simFloat *ret2 = (simFloat*)simCreateBuffer(sizeof(simFloat) * r.size());
-                    for(int i = 0; i < r.size(); i++) ret2[i] = r[i];
+                    for(size_t i = 0; i < r.size(); i++) ret2[i] = r[i];
                     replyData[1] = r.size();
                     retVal = ret2;
                 }
