@@ -236,7 +236,7 @@ namespace vrep
                 if(name.length())
                 {
                     simChar *ret = simCreateBuffer(name.length() + 1);
-                    strcpy(ret, name.c_str());
+                    std::strcpy(ret, name.c_str());
                     retVal = ret;
                 }
             }
