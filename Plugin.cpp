@@ -45,6 +45,8 @@ namespace vrep
             bit10 set: key pressed
             bit11 set: simulation started
             bit12 set: simulation ended
+            bit13 set: script created
+            bit14 set: script erased
             */
             {
                 onInstancePass(
@@ -60,7 +62,9 @@ namespace vrep
                         (auxiliaryData[0] & (1 <<  9)) > 0,
                         (auxiliaryData[0] & (1 << 10)) > 0,
                         (auxiliaryData[0] & (1 << 11)) > 0,
-                        (auxiliaryData[0] & (1 << 12)) > 0
+                        (auxiliaryData[0] & (1 << 12)) > 0,
+                        (auxiliaryData[0] & (1 << 13)) > 0,
+                        (auxiliaryData[0] & (1 << 14)) > 0
                 );
             }
             break;
@@ -592,7 +596,7 @@ namespace vrep
         return lib;
     }
 
-    void Plugin::onInstancePass(bool objectsErased, bool objectsCreated, bool modelLoaded, bool sceneLoaded, bool undoCalled, bool redoCalled, bool sceneSwitched, bool editModeActive, bool objectsScaled, bool selectionStateChanged, bool keyPressed, bool simulationStarted, bool simulationEnded)
+    void Plugin::onInstancePass(bool objectsErased, bool objectsCreated, bool modelLoaded, bool sceneLoaded, bool undoCalled, bool redoCalled, bool sceneSwitched, bool editModeActive, bool objectsScaled, bool selectionStateChanged, bool keyPressed, bool simulationStarted, bool simulationEnded, bool scriptCreated, bool scriptErased)
     {
     }
 

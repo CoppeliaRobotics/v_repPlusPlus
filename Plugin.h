@@ -38,7 +38,7 @@ namespace vrep
         virtual void * onMessage(int message, int *auxData, void *customData, int *replyData);
         virtual LIBRARY loadVrepLibrary();
 
-        virtual void onInstancePass(bool objectsErased, bool objectsCreated, bool modelLoaded, bool sceneLoaded, bool undoCalled, bool redoCalled, bool sceneSwitched, bool editModeActive, bool objectsScaled, bool selectionStateChanged, bool keyPressed, bool simulationStarted, bool simulationEnded);
+        virtual void onInstancePass(bool objectsErased, bool objectsCreated, bool modelLoaded, bool sceneLoaded, bool undoCalled, bool redoCalled, bool sceneSwitched, bool editModeActive, bool objectsScaled, bool selectionStateChanged, bool keyPressed, bool simulationStarted, bool simulationEnded, bool scriptCreated, bool scriptErased);
         virtual void onInstanceSwitch(int sceneID);
         virtual void onInstanceAboutToSwitch(int sceneID);
         virtual void onMenuItemSelected(int itemHandle, int itemState);
