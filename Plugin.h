@@ -57,7 +57,7 @@ namespace vrep
         virtual void * onMessage(int message, int *auxData, void *customData, int *replyData);
         virtual LIBRARY loadVrepLibrary();
 
-        virtual void onInstancePass(const InstancePassFlags &flags);
+        virtual void onInstancePass(const InstancePassFlags &flags, bool first);
         virtual void onInstanceSwitch(int sceneID);
         virtual void onInstanceAboutToSwitch(int sceneID);
         virtual void onMenuItemSelected(int itemHandle, int itemState);
@@ -102,6 +102,8 @@ namespace vrep
         virtual void onProxSensorSelectUp(int objectID, simFloat *clickedPoint, simFloat *normalVector);
         virtual void onPickSelectDown(int objectID);
 
+    private:
+        bool firstInstancePass = true;
     };
 }
 

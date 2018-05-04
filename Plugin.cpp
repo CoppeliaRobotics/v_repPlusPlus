@@ -48,7 +48,8 @@ namespace vrep
                 flags.simulationEnded       = (auxiliaryData[0] & (1 << 12)) > 0;
                 flags.scriptCreated         = (auxiliaryData[0] & (1 << 13)) > 0;
                 flags.scriptErased          = (auxiliaryData[0] & (1 << 14)) > 0;
-                onInstancePass(flags);
+                onInstancePass(flags, firstInstancePass);
+                firstInstancePass = false;
             }
             break;
         case sim_message_eventcallback_instanceswitch:
@@ -579,7 +580,7 @@ namespace vrep
         return lib;
     }
 
-    void Plugin::onInstancePass(const InstancePassFlags &flags)
+    void Plugin::onInstancePass(const InstancePassFlags &flags, bool first)
     {
     }
 
