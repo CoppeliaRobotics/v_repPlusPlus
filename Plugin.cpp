@@ -30,42 +30,25 @@ namespace vrep
             If you react to some of below event flags, make sure you do not react to their
             equivalent event callback message (e.g. sim_message_eventcallback_sceneloaded is
             similar to below's bit3 set)
-
-            bit0 set: object(s) erased
-            bit1 set: object(s) created
-            bit2 set: model loaded
-            bit3 set: scene loaded
-            bit4 set: undo called
-            bit5 set: redo called
-            bit6 set: scene switched (react to this message in a similar way as you would
-                                    react to a full scene content change)
-            bit7 set: edit mode active. This is not an event flag, but a state flag
-            bit8 set: object(s) scaled
-            bit9 set: selection state changed. (different objects are selected now)
-            bit10 set: key pressed
-            bit11 set: simulation started
-            bit12 set: simulation ended
-            bit13 set: script created
-            bit14 set: script erased
             */
             {
-                onInstancePass(
-                        (auxiliaryData[0] & (1 <<  0)) > 0,
-                        (auxiliaryData[0] & (1 <<  1)) > 0,
-                        (auxiliaryData[0] & (1 <<  2)) > 0,
-                        (auxiliaryData[0] & (1 <<  3)) > 0,
-                        (auxiliaryData[0] & (1 <<  4)) > 0,
-                        (auxiliaryData[0] & (1 <<  5)) > 0,
-                        (auxiliaryData[0] & (1 <<  6)) > 0,
-                        (auxiliaryData[0] & (1 <<  7)) > 0,
-                        (auxiliaryData[0] & (1 <<  8)) > 0,
-                        (auxiliaryData[0] & (1 <<  9)) > 0,
-                        (auxiliaryData[0] & (1 << 10)) > 0,
-                        (auxiliaryData[0] & (1 << 11)) > 0,
-                        (auxiliaryData[0] & (1 << 12)) > 0,
-                        (auxiliaryData[0] & (1 << 13)) > 0,
-                        (auxiliaryData[0] & (1 << 14)) > 0
-                );
+                InstancePassFlags flags;
+                flags.objectsErased         = (auxiliaryData[0] & (1 <<  0)) > 0;
+                flags.objectsCreated        = (auxiliaryData[0] & (1 <<  1)) > 0;
+                flags.modelLoaded           = (auxiliaryData[0] & (1 <<  2)) > 0;
+                flags.sceneLoaded           = (auxiliaryData[0] & (1 <<  3)) > 0;
+                flags.undoCalled            = (auxiliaryData[0] & (1 <<  4)) > 0;
+                flags.redoCalled            = (auxiliaryData[0] & (1 <<  5)) > 0;
+                flags.sceneSwitched         = (auxiliaryData[0] & (1 <<  6)) > 0;
+                flags.editModeActive        = (auxiliaryData[0] & (1 <<  7)) > 0;
+                flags.objectsScaled         = (auxiliaryData[0] & (1 <<  8)) > 0;
+                flags.selectionStateChanged = (auxiliaryData[0] & (1 <<  9)) > 0;
+                flags.keyPressed            = (auxiliaryData[0] & (1 << 10)) > 0;
+                flags.simulationStarted     = (auxiliaryData[0] & (1 << 11)) > 0;
+                flags.simulationEnded       = (auxiliaryData[0] & (1 << 12)) > 0;
+                flags.scriptCreated         = (auxiliaryData[0] & (1 << 13)) > 0;
+                flags.scriptErased          = (auxiliaryData[0] & (1 << 14)) > 0;
+                onInstancePass(flags);
             }
             break;
         case sim_message_eventcallback_instanceswitch:
@@ -596,7 +579,7 @@ namespace vrep
         return lib;
     }
 
-    void Plugin::onInstancePass(bool objectsErased, bool objectsCreated, bool modelLoaded, bool sceneLoaded, bool undoCalled, bool redoCalled, bool sceneSwitched, bool editModeActive, bool objectsScaled, bool selectionStateChanged, bool keyPressed, bool simulationStarted, bool simulationEnded, bool scriptCreated, bool scriptErased)
+    void Plugin::onInstancePass(const InstancePassFlags &flags)
     {
     }
 
