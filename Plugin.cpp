@@ -194,8 +194,8 @@ namespace vrep
                 onImageFilterEnumerate(replyData[0], replyData[1], name);
                 if(name.length())
                 {
-                    simChar *ret = simCreateBuffer(name.length() + 1);
-                    std::strcpy(ret, name.c_str());
+                    simChar *ret = simCreateBuffer((simInt)name.length() + 1);
+                    std::strncpy(ret, name.c_str(), name.length());
                     retVal = ret;
                 }
             }
@@ -249,9 +249,9 @@ namespace vrep
                 std::vector<simFloat> r = onImageFilterProcess(auxiliaryData[0], auxiliaryData[1], auxiliaryData[2], auxiliaryData[3], auxiliaryData[4], b[0], b[1], b[2], b[3], b[4], b[5], (void*)b[6], replyData[0]);
                 if(r.size())
                 {
-                    simFloat *ret2 = (simFloat*)simCreateBuffer(sizeof(simFloat) * r.size());
+                    simFloat *ret2 = (simFloat*)simCreateBuffer(sizeof(simFloat) * (simInt)r.size());
                     for(size_t i = 0; i < r.size(); i++) ret2[i] = r[i];
-                    replyData[1] = r.size();
+                    replyData[1] = (simInt)r.size();
                     retVal = ret2;
                 }
             }
