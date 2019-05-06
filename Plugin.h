@@ -52,6 +52,7 @@ namespace vrep
     class Plugin
     {
     public:
+        void init();
         virtual void onStart();
         virtual void onEnd();
         virtual void * onMessage(int message, int *auxData, void *customData, int *replyData);
@@ -115,6 +116,7 @@ VREP_DLLEXPORT unsigned char v_repStart(void *reservedPointer, int reservedInt) 
     try \
     { \
         vrepLib = vrepPlugin.loadVrepLibrary(); \
+        vrepPlugin.init(); \
         vrepPlugin.onStart(); \
         return pluginVersion; \
     } \

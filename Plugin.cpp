@@ -6,6 +6,11 @@
 
 namespace vrep
 {
+    void Plugin::init()
+    {
+        firstInstancePass=true;
+    }
+    
     void Plugin::onStart()
     {
     }
