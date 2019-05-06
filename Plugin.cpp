@@ -552,36 +552,36 @@ namespace vrep
     LIBRARY Plugin::loadVrepLibrary()
     {
         LIBRARY lib = NULL;
-	char curDirAndFile[1024];
+        char curDirAndFile[1024];
 #ifdef _WIN32
-	#ifdef QT_COMPIL
-	    _getcwd(curDirAndFile, sizeof(curDirAndFile));
-	#else
-	    ::GetModuleFileNameA(NULL, curDirAndFile, 1023);
-	    ::PathRemoveFileSpecA(curDirAndFile);
-	#endif
+#ifdef QT_COMPIL
+        _getcwd(curDirAndFile, sizeof(curDirAndFile));
+#else
+        ::GetModuleFileNameA(NULL, curDirAndFile, 1023);
+        ::PathRemoveFileSpecA(curDirAndFile);
+#endif
 #elif defined (__linux) || defined (__APPLE__)
-	getcwd(curDirAndFile, sizeof(curDirAndFile));
+        getcwd(curDirAndFile, sizeof(curDirAndFile));
 #endif
-	std::string currentDirAndPath(curDirAndFile);
-	std::string temp(currentDirAndPath);
+        std::string currentDirAndPath(curDirAndFile);
+        std::string temp(currentDirAndPath);
 #ifdef _WIN32
-	temp += "\\v_rep.dll";
+        temp += "\\v_rep.dll";
 #elif defined (__linux)
-	temp += "/libv_rep.so";
+        temp += "/libv_rep.so";
 #elif defined (__APPLE__)
-	temp += "/libv_rep.dylib";
+        temp += "/libv_rep.dylib";
 #endif
-	lib = ::loadVrepLibrary(temp.c_str());
-	if(lib == NULL)
+        lib = ::loadVrepLibrary(temp.c_str());
+        if(lib == NULL)
         {
             throw std::runtime_error("could not find or correctly load the V-REP library");
         }
-	if(::getVrepProcAddresses(lib)==0)
-	{
-	    ::unloadVrepLibrary(lib);
-	    throw std::runtime_error("could not find all required functions in the V-REP library");
-	}
+        if(::getVrepProcAddresses(lib)==0)
+        {
+            ::unloadVrepLibrary(lib);
+            throw std::runtime_error("could not find all required functions in the V-REP library");
+        }
         return lib;
     }
 
