@@ -110,14 +110,14 @@ namespace vrep
 
 #define VREP_PLUGIN(pluginName, pluginVersion, className) \
 LIBRARY vrepLib; \
-className vrepPlugin; \
+className *vrepPlugin; \
 VREP_DLLEXPORT unsigned char v_repStart(void *reservedPointer, int reservedInt) \
 { \
     try \
     { \
-        vrepLib = vrepPlugin.loadVrepLibrary(); \
-        vrepPlugin.init(); \
-        vrepPlugin.onStart(); \
+        vrepPlugin = new className; \
+        vrepLib = vrepPlugin->loadVrepLibrary(); \
+        vrepPlugin->onStart(); \
         return pluginVersion; \
     } \
     catch(std::exception &ex) \
@@ -128,12 +128,35 @@ VREP_DLLEXPORT unsigned char v_repStart(void *reservedPointer, int reservedInt) 
 } \
 VREP_DLLEXPORT void v_repEnd() \
 { \
-    vrepPlugin.onEnd(); \
+    try \
+    { \
+        if(vrepPlugin) \
+        { \
+            vrepPlugin->onEnd(); \
+            delete vrepPlugin; \
+            vrepPlugin = nullptr; \
+        } \
+    } \
+    catch(std::exception &ex) \
+    { \
+        std::cout << pluginName << ": " << ex.what() << std::endl; \
+    } \
     unloadVrepLibrary(vrepLib); \
 } \
 VREP_DLLEXPORT void * v_repMessage(int message, int *auxiliaryData, void *customData, int *replyData) \
 { \
-    return vrepPlugin.onMessage(message, auxiliaryData, customData, replyData); \
+    try \
+    { \
+        if(vrepPlugin) \
+        { \
+            return vrepPlugin->onMessage(message, auxiliaryData, customData, replyData); \
+        } \
+    } \
+    catch(std::exception &ex) \
+    { \
+        std::cout << pluginName << ": " << ex.what() << std::endl; \
+    } \
+    return 0L; \
 }
 
 #endif // VREPPLUSPLUS_PLUGIN_H_INCLUDED
