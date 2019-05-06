@@ -48,10 +48,25 @@ namespace vrep
                 flags.simulationEnded       = (auxiliaryData[0] & (1 << 12)) > 0;
                 flags.scriptCreated         = (auxiliaryData[0] & (1 << 13)) > 0;
                 flags.scriptErased          = (auxiliaryData[0] & (1 << 14)) > 0;
-                onInstancePass(flags, firstInstancePass);
+
+                onInstancePass(flags, firstInstancePass); // for backward compatibility
+
+                if(firstInstancePass) onFirstInstancePass(flags);
+                else onInstancePass(flags);
+
                 firstInstancePass = false;
             }
             break;
+#if VREP_PROGRAM_FULL_VERSION_NB >= 3060104 // 3.6.1.rev4
+        case sim_message_eventcallback_lastinstancepass:
+            /*
+            called on the last client application loop pass (the instancepass message is not sent)
+            */
+            {
+                onLastInstancePass();
+            }
+            break;
+#endif // VREP_PROGRAM_FULL_VERSION_NB >= 3060104
         case sim_message_eventcallback_instanceswitch:
             /*
             scene was switched (react to this message in a similar way as you would react to
@@ -581,6 +596,18 @@ namespace vrep
     }
 
     void Plugin::onInstancePass(const InstancePassFlags &flags, bool first)
+    {
+    }
+
+    void Plugin::onInstancePass(const InstancePassFlags &flags)
+    {
+    }
+
+    void Plugin::onFirstInstancePass(const InstancePassFlags &flags)
+    {
+    }
+
+    void Plugin::onLastInstancePass()
     {
     }
 

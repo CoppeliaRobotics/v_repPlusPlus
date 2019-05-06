@@ -59,6 +59,9 @@ namespace vrep
         virtual LIBRARY loadVrepLibrary();
 
         virtual void onInstancePass(const InstancePassFlags &flags, bool first);
+        virtual void onInstancePass(const InstancePassFlags &flags);
+        virtual void onFirstInstancePass(const InstancePassFlags &flags);
+        virtual void onLastInstancePass();
         virtual void onInstanceSwitch(int sceneID);
         virtual void onInstanceAboutToSwitch(int sceneID);
         virtual void onMenuItemSelected(int itemHandle, int itemState);
