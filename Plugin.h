@@ -8,6 +8,11 @@
 
 #include "v_repLib.h"
 
+// backwards compatibility for this constant:
+#ifndef VREP_PROGRAM_FULL_VERSION_NB
+#define VREP_PROGRAM_FULL_VERSION_NB ((VREP_PROGRAM_VERSION_NB) * 100 + (VREP_PROGRAM_REVISION_NB))
+#endif // VREP_PROGRAM_FULL_VERSION_NB
+
 #ifdef _WIN32
 	#define VREP_DLLEXPORT extern "C" __declspec(dllexport)
 #endif /* _WIN32 */
